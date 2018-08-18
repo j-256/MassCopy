@@ -42,6 +42,9 @@
 			<Component Id="Exe" Guid="3D328310-23BF-4C86-B6AA-99A7615F68E3">
 				<File Id="MassCopy.exe" Source="$(var.Bin)\MassCopy.exe" KeyPath="yes" Checksum="yes"/>
 			</Component>
+			<Component Id="License" Guid="">
+				<File Id="LICENSE" Source="$(var.Root)\LICENSE" KeyPath="yes"/>
+			</Component>
 		</DirectoryRef>
 
 		<DirectoryRef Id="StartMenuFolder">
@@ -63,7 +66,8 @@
 		         ConfigurableDirectory="INSTALLFOLDER">
 		         <!--TypicalDefault="advertise"-->
 			<ComponentRef Id="Exe" />
-			<ComponentRef Id="StartMenuShortcut"/>
+			<ComponentRef Id="License" />
+			<ComponentRef Id="StartMenuShortcut" />
 		</Feature>
 	</Product>
 
