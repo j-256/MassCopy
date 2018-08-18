@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include Variables.wxi ?>
+<!-- ProgramFilesFolder = C:\Program Files (x86) -->
+<!-- ProgramFiles64Folder = C:\Program Files -->
+<!-- ProgramMenuFolder = C:\ProgramData\Microsoft\Windows\Start Menu -->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*"
+             Name="MassCopy"
+             Language="1033"
+             Version="1.0"
+             Manufacturer="Aegis Technologies"
+             UpgradeCode="BDB86B53-D617-4FE1-B0DC-D8B9F7713D88">
+		<Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of MassCopy is already installed." />
+		<Media Id="1" Cabinet="MassCopy.cab" EmbedCab="yes"/>
+		<!--<MediaTemplate />-->
+		
+		<UI>
+			<UIRef Id="WixUI_InstallDir" />
+			<Publish Dialog="ExitDialog"
+			         Control="Finish" 
+			         Event="DoAction" 
+			         Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+		</UI>
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch MassCopy" />
+		
+		<Property Id="WixShellExecTarget" Value="[#MassCopy.exe]" />
+		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir"> <!-- ! -->
+			<Directory Id="ProgramFiles64Folder"> <!-- ! -->
+				<Directory Id="INSTALLFOLDER" Name="MassCopy"/>
+			</Directory>
+			<Directory Id="ProgramMenuFolder"> <!-- ! -->
+				<Directory Id="StartMenuFolder" Name="MassCopy"/>
+			</Directory>
+		</Directory>
+
+		<DirectoryRef Id="INSTALLFOLDER">
+			<Component Id="Exe" Guid="3D328310-23BF-4C86-B6AA-99A7615F68E3">
+				<File Id="MassCopy.exe" Source="$(var.Bin)\MassCopy.exe" KeyPath="yes" Checksum="yes"/>
+			</Component>
+		</DirectoryRef>
+
+		<DirectoryRef Id="StartMenuFolder">
+			<Component Id="StartMenuShortcut" Guid="3FEE6CE2-5444-40DA-8561-B3862DD5A84E">
+				<Shortcut Id="StartMenuShortcut"
+                          Name="MassCopy"
+                          Description="Copy multiple files from one location to another based on a set of filters."
+                          WorkingDirectory="INSTALLFOLDER"
+				          Target="[#MassCopy.exe]"/>
+				<RemoveFolder Id="StartMenuFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU" Key="Software\Aegis Technologies\MassCopy" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+
+		<Feature Id="MainApplication" 
+		         Title="MassCopy" 
+		         Level="1"
+		         AllowAdvertise="yes"
+		         ConfigurableDirectory="INSTALLFOLDER">
+		         <!--TypicalDefault="advertise"-->
+			<ComponentRef Id="Exe" />
+			<ComponentRef Id="StartMenuShortcut"/>
+		</Feature>
+	</Product>
+
+	<!-- From "Getting Started" example -->
+	<!--<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="MassCopy" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="ProductComponent">
+		    <File Source="$(var.MassCopy.TargetPath)" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>-->
+	<!-- End -->
+
+</Wix>

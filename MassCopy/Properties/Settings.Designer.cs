@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FileCopier.Properties
+namespace MassCopy.Properties
 {
 
 

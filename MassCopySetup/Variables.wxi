@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+	<?define Bin="C:\Users\X\Desktop\LocalCode\MassCopy\MassCopy\bin\$(var.MassCopy.Configuration)" ?>
+	<!-- http://wixtoolset.org/documentation/manual/v3/overview/preprocessor.html -->
+	<!-- http://wixtoolset.org/documentation/manual/v3/votive/votive_project_references.html -->
+</Include>

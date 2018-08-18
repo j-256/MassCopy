@@ -1,4 +1,4 @@
-﻿namespace FileCopier
+﻿namespace MassCopy
 {
 	partial class Form1
 	{

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="PUT-GUID-HERE" Name="WixSingleSetupExample" Language="1055"
+			 Version="1.0.0.0" Manufacturer="Can Yucel" UpgradeCode="PUT-GUID-HERE">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="WixSingleSetupExample" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentRef Id="ProgramMenuDir"/>
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+
+			<Directory Id="DesktopFolder" Name="Desktop" />
+
+			<Directory Id="ProgramMenuFolder" Name="Programs">
+				<Directory Id="ApplicationProgramsFolder" Name="WixSingleSetup">
+					<Component Id="ProgramMenuDir" Guid="PUT-GUID-HERE">
+						<RemoveFolder Id="ProgramMenuDir" On="uninstall"/>
+						<RegistryValue Root="HKCU" Key="Software\[Manufacturer]\WixSetup"
+									   Type="integer" Value="1" Name="installed" KeyPath="yes" />
+					</Component>
+				</Directory>
+			</Directory>
+
+
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="WixSingleSetupExample" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the
+           ComponentRef below in order to add resources to this installer. -->
+			<Component Id="ProductTextFile">
+				<File Source="blankText.txt" KeyPath="yes">
+					<Shortcut Id="desktopShortcut" Advertise="yes" Directory="DesktopFolder"
+							  Name="WixSingleSetup Help" WorkingDirectory="INSTALLFOLDER"
+							  Icon="icon1.txt" IconIndex="0">
+						<Icon Id="icon1.txt" SourceFile="blankText.txt" />
+					</Shortcut>
+					<Shortcut Id="startMenuShotcut" Directory="ApplicationProgramsFolder"
+							  Name="WiXSingleSetup Help" WorkingDirectory="INSTALLFOLDER"
+							  Icon="icon2.txt" IconIndex="0" Advertise="yes">
+						<Icon Id="icon2.txt" SourceFile="blankText.txt"/>
+					</Shortcut>
+				</File>
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
