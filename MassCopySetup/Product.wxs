@@ -14,8 +14,15 @@
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of MassCopy is already installed." />
 		<Media Id="1" Cabinet="MassCopy.cab" EmbedCab="yes"/>
-		<!--<MediaTemplate />-->
 		
+		<WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)Resources\LICENSE.rtf" />
+		
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch MassCopy" />
+		<Property Id="WixShellExecTarget" Value="[#MassCopy.exe]" />
+		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
 		<UI>
 			<UIRef Id="WixUI_InstallDir" />
 			<Publish Dialog="ExitDialog"
@@ -23,11 +30,6 @@
 			         Event="DoAction" 
 			         Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
 		</UI>
-		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
-		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch MassCopy" />
-		
-		<Property Id="WixShellExecTarget" Value="[#MassCopy.exe]" />
-		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 
 		<Directory Id="TARGETDIR" Name="SourceDir"> <!-- ! -->
 			<Directory Id="ProgramFiles64Folder"> <!-- ! -->
