@@ -32,36 +32,33 @@
 		</UI>
 
 		<Directory Id="TARGETDIR" Name="SourceDir"> <!-- ! -->
-			<Directory Id="ProgramFiles64Folder"> <!-- ! -->
+			<Directory Id="ProgramFiles64Folder"> <!-- C:\Program Files -->
 				<Directory Id="INSTALLFOLDER" Name="MassCopy"/>
 			</Directory>
-			<Directory Id="ProgramMenuFolder"> <!-- ! -->
-				<Directory Id="StartMenuFolder" Name="MassCopy"/>
+			<Directory Id="ProgramMenuFolder"> <!-- C:\ProgramData\Microsoft\Windows\Start Menu -->
+				<Directory Id="StartMenuFolder" Name="MassCopy"/> <!-- Doesn't actually make a folder, why? -->
 			</Directory>
 		</Directory>
 
 		<DirectoryRef Id="INSTALLFOLDER">
 			<Component Id="Exe" Guid="3D328310-23BF-4C86-B6AA-99A7615F68E3">
-				<File Id="MassCopy.exe" Source="$(var.Bin)\MassCopy.exe" KeyPath="yes" Checksum="yes"/>
+				<File Id="MassCopy.exe" Source="$(var.Bin)\MassCopy.exe" KeyPath="yes" Checksum="yes">
+					<Shortcut Id="StartMenuShortcut" 
+					          Name="MassCopy" 
+					          Advertise="yes"
+					          Description="Starts MassCopy"
+					          Directory="StartMenuFolder"
+					          WorkingDirectory="INSTALLFOLDER"/>
+				</File>
+				<!-- As of 2018-08-19, can't get start menu shortcut to go in subfolder like every other program, nor is 
+					uninstall working properly. Have to uninstall using "Add or remove programs" rather than generated installer. -->
 			</Component>
-			<Component Id="License" Guid="">
+			<Component Id="License" Guid="69E4D141-1EBA-4EFA-A44D-21B9E76D8B0C">
 				<File Id="LICENSE" Source="$(var.Root)\LICENSE" KeyPath="yes"/>
 			</Component>
 		</DirectoryRef>
 
-		<DirectoryRef Id="StartMenuFolder">
-			<Component Id="StartMenuShortcut" Guid="3FEE6CE2-5444-40DA-8561-B3862DD5A84E">
-				<Shortcut Id="StartMenuShortcut"
-                          Name="MassCopy"
-                          Description="Copy multiple files from one location to another based on a set of filters."
-                          WorkingDirectory="INSTALLFOLDER"
-				          Target="[#MassCopy.exe]"/>
-				<RemoveFolder Id="StartMenuFolder" On="uninstall"/>
-				<RegistryValue Root="HKCU" Key="Software\Aegis Technologies\MassCopy" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-			</Component>
-		</DirectoryRef>
-
-		<Feature Id="MainApplication" 
+		<Feature Id="MainApplication"
 		         Title="MassCopy" 
 		         Level="1"
 		         AllowAdvertise="yes"
@@ -69,7 +66,6 @@
 		         <!--TypicalDefault="advertise"-->
 			<ComponentRef Id="Exe" />
 			<ComponentRef Id="License" />
-			<ComponentRef Id="StartMenuShortcut" />
 		</Feature>
 	</Product>
 
