@@ -39,7 +39,6 @@
 			this.Name = "MainForm";
 			this.Text = "MassCopy";
 			this.ResumeLayout(false);
-
 		}
 
 		#endregion
