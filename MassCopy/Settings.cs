@@ -11,7 +11,12 @@ namespace MassCopy
 		/// <summary>
 		/// Full path to file containing list of desired files.
 		/// </summary>
-		public string ListFile { get; set; }
+		//public string ListFile { get; set; }
+
+		/// <summary>
+		/// String array of file names to search for and copy.
+		/// </summary>
+		public string[] FileNames { get; set; }
 
 		/// <summary>
 		/// Full path to source folder.
@@ -19,7 +24,7 @@ namespace MassCopy
 		public string SourceFolder { get; set; }
 
 		/// <summary>
-		/// Full path to destination folder
+		/// Full path to destination folder.
 		/// </summary>
 		public string DestinationFolder { get; set; }
 
