@@ -31,6 +31,7 @@ namespace MassCopy
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.sourceBrowseDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.sourceBrowseBtn = new System.Windows.Forms.Button();
 			this.foldersGroupBox = new System.Windows.Forms.GroupBox();
@@ -47,8 +48,12 @@ namespace MassCopy
 			this.listTextBox = new System.Windows.Forms.TextBox();
 			this.listGroupBox = new System.Windows.Forms.GroupBox();
 			this.listClearBtn = new System.Windows.Forms.Button();
+			this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.foldersGroupBox.SuspendLayout();
 			this.listGroupBox.SuspendLayout();
+			this.mainMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// sourceBrowseDialog
@@ -83,14 +88,14 @@ namespace MassCopy
 			this.foldersGroupBox.Controls.Add(this.sourceLabel);
 			this.foldersGroupBox.Controls.Add(this.sourceBrowseBtn);
 			this.foldersGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.foldersGroupBox.Location = new System.Drawing.Point(493, 7);
+			this.foldersGroupBox.Location = new System.Drawing.Point(505, 38);
 			this.foldersGroupBox.Margin = new System.Windows.Forms.Padding(4);
 			this.foldersGroupBox.Name = "foldersGroupBox";
 			this.foldersGroupBox.Size = new System.Drawing.Size(529, 136);
 			this.foldersGroupBox.TabIndex = 1;
 			this.foldersGroupBox.TabStop = false;
 			this.foldersGroupBox.Text = "Folders";
-			this.foldersGroupBox.Click += new EventHandler(this.ClearFocus);
+			this.foldersGroupBox.Click += new System.EventHandler(this.ClearFocus);
 			// 
 			// sourceRecursiveCheckBox
 			// 
@@ -179,7 +184,7 @@ namespace MassCopy
 			this.listBrowseBtn.AutoSize = true;
 			this.listBrowseBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.listBrowseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.listBrowseBtn.Location = new System.Drawing.Point(389, 694);
+			this.listBrowseBtn.Location = new System.Drawing.Point(389, 672);
 			this.listBrowseBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.listBrowseBtn.Name = "listBrowseBtn";
 			this.listBrowseBtn.Size = new System.Drawing.Size(78, 30);
@@ -194,29 +199,30 @@ namespace MassCopy
 			this.listTextBox.Multiline = true;
 			this.listTextBox.Name = "listTextBox";
 			this.listTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.listTextBox.Size = new System.Drawing.Size(461, 662);
+			this.listTextBox.Size = new System.Drawing.Size(461, 640);
 			this.listTextBox.TabIndex = 7;
 			this.listTextBox.WordWrap = false;
+			this.listTextBox.LostFocus += new EventHandler(this.listTextBox_LostFocus);
 			// 
 			// listGroupBox
 			// 
 			this.listGroupBox.Controls.Add(this.listClearBtn);
 			this.listGroupBox.Controls.Add(this.listTextBox);
 			this.listGroupBox.Controls.Add(this.listBrowseBtn);
-			this.listGroupBox.Location = new System.Drawing.Point(12, 7);
+			this.listGroupBox.Location = new System.Drawing.Point(6, 38);
 			this.listGroupBox.Name = "listGroupBox";
-			this.listGroupBox.Size = new System.Drawing.Size(474, 734);
+			this.listGroupBox.Size = new System.Drawing.Size(474, 709);
 			this.listGroupBox.TabIndex = 8;
 			this.listGroupBox.TabStop = false;
 			this.listGroupBox.Text = "File List";
-			this.listGroupBox.Click += new EventHandler(this.ClearFocus);
+			this.listGroupBox.Click += new System.EventHandler(this.ClearFocus);
 			// 
 			// listClearBtn
 			// 
 			this.listClearBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.listClearBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.listClearBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.listClearBtn.Location = new System.Drawing.Point(5, 694);
+			this.listClearBtn.Location = new System.Drawing.Point(7, 672);
 			this.listClearBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.listClearBtn.Name = "listClearBtn";
 			this.listClearBtn.Size = new System.Drawing.Size(78, 30);
@@ -225,24 +231,60 @@ namespace MassCopy
 			this.listClearBtn.UseVisualStyleBackColor = true;
 			this.listClearBtn.Click += new System.EventHandler(this.listClearBtn_Click);
 			// 
+			// mainMenuStrip
+			// 
+			this.mainMenuStrip.Font = new System.Drawing.Font("Segoe UI", 10F);
+			this.mainMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+			this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpToolStripMenuItem});
+			this.mainMenuStrip.Location = new System.Drawing.Point(3, 3);
+			this.mainMenuStrip.Name = "mainMenuStrip";
+			this.mainMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.mainMenuStrip.Size = new System.Drawing.Size(1031, 31);
+			this.mainMenuStrip.TabIndex = 9;
+			this.mainMenuStrip.Text = "Menu";
+			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(57, 27);
+			this.helpToolStripMenuItem.Text = "Help";
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this.aboutToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.aboutToolStripMenuItem.Text = "About";
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(1037, 753);
+			this.Controls.Add(this.mainMenuStrip);
 			this.Controls.Add(this.listGroupBox);
 			this.Controls.Add(this.foldersGroupBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MainMenuStrip = this.mainMenuStrip;
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "MainForm";
 			this.Padding = new System.Windows.Forms.Padding(3);
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "MassCopy";
+			this.Click += new System.EventHandler(this.ClearFocus);
 			this.foldersGroupBox.ResumeLayout(false);
 			this.foldersGroupBox.PerformLayout();
 			this.listGroupBox.ResumeLayout(false);
 			this.listGroupBox.PerformLayout();
+			this.mainMenuStrip.ResumeLayout(false);
+			this.mainMenuStrip.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
-			this.Click += new EventHandler(this.ClearFocus);
+
 		}
 
 		#endregion
@@ -263,5 +305,8 @@ namespace MassCopy
 		private System.Windows.Forms.TextBox listTextBox;
 		private System.Windows.Forms.GroupBox listGroupBox;
 		private System.Windows.Forms.Button listClearBtn;
+		private System.Windows.Forms.MenuStrip mainMenuStrip;
+		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 	}
 }

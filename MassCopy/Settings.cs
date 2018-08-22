@@ -9,16 +9,6 @@ namespace MassCopy
 		#region Settings
 
 		/// <summary>
-		/// Full path to file containing list of desired files.
-		/// </summary>
-		//public string ListFile { get; set; }
-
-		/// <summary>
-		/// String array of file names to search for and copy.
-		/// </summary>
-		public string[] FileNames { get; set; }
-
-		/// <summary>
 		/// Full path to source folder.
 		/// </summary>
 		public string SourceFolder { get; set; }
@@ -32,6 +22,11 @@ namespace MassCopy
 		/// Whether or not to search subfolders of <seealso cref="SourceFolder"/>.
 		/// </summary>
 		public bool RecursiveSearch { get; set; }
+
+		/// <summary>
+		/// String array of file names to search for and copy.
+		/// </summary>
+		public string[] FileNames { get; set; }
 
 		#endregion
 

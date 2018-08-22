@@ -24,7 +24,7 @@ namespace MassCopy
 
 			if (!Program.Settings.FileNames.IsNullOrEmpty())
 			{
-				listTextBox.Text = string.Join(Environment.NewLine, Program.Settings.FileNames);
+				listTextBox.Lines = Program.Settings.FileNames;
 			}
 
 			sourceRecursiveCheckBox.Checked = Program.Settings.RecursiveSearch;
@@ -41,8 +41,8 @@ namespace MassCopy
 		#region Source
 		private void sourceBrowseBtn_Click(object sender, EventArgs e)
 		{
-			DialogResult result = sourceBrowseDialog.ShowDialog();
-			if (result == DialogResult.OK)
+			DialogResult selectFolderResult = sourceBrowseDialog.ShowDialog();
+			if (selectFolderResult == DialogResult.OK)
 			{
 				string sourceFolder = sourceBrowseDialog.SelectedPath;
 
@@ -84,8 +84,8 @@ namespace MassCopy
 		#region Destination
 		private void destinationBrowseBtn_Click(object sender, EventArgs e)
 		{
-			DialogResult result = destinationBrowseDialog.ShowDialog();
-			if (result == DialogResult.OK)
+			DialogResult selectFolderResult = destinationBrowseDialog.ShowDialog();
+			if (selectFolderResult == DialogResult.OK)
 			{
 				string destinationFolder = destinationBrowseDialog.SelectedPath;
 
@@ -119,6 +119,12 @@ namespace MassCopy
 		#endregion
 
 		#region List
+		private void listTextBox_LostFocus(object sender, EventArgs e)
+		{
+			Program.Settings.FileNames = listTextBox.Lines;
+			Program.Settings.Save();
+		}
+
 		private void listClearBtn_Click(object sender, EventArgs e)
 		{
 			listTextBox.Clear();
@@ -133,10 +139,18 @@ namespace MassCopy
 			if (openFileResult == DialogResult.OK)
 			{
 				string[] lines = File.ReadAllLines(listOpenFileDialog.FileName);
-				listTextBox.Text = string.Join(Environment.NewLine, lines);
+				listTextBox.Lines = lines;
 				Program.Settings.FileNames = lines;
 				Program.Settings.Save();
 			}
+		}
+		#endregion
+
+		#region Menu / Toolbar
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			AboutForm aboutPage = new AboutForm();
+			aboutPage.ShowDialog(this);
 		}
 		#endregion
 	}
