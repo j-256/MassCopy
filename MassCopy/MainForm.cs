@@ -149,8 +149,10 @@ namespace MassCopy
 		#region Menu / Toolbar
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			AboutForm aboutPage = new AboutForm();
-			aboutPage.ShowDialog(this);
+			using (AboutForm aboutPage = new AboutForm())
+			{
+				aboutPage.ShowDialog(this);
+			}
 		}
 		#endregion
 	}
