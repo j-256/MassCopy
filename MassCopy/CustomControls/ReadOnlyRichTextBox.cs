@@ -8,15 +8,23 @@ namespace MassCopy.CustomControls
 		{
 			ReadOnly = true;
 			Cursor = Cursors.Arrow;
+			GotFocus += ReadOnlyRichTextBox_GotFocus;
 		}
 
-		protected override void WndProc(ref Message m)
+		// Prevent the ReadOnlyRichTextBox from getting focus, which shows up as a pulsing IBeam cursor.
+		private void ReadOnlyRichTextBox_GotFocus(object sender, System.EventArgs e)
 		{
-			// Ignore all messages that try to set the focus. Prevents the pulsing IBeam cursor from showing up.
-			if (m.Msg != 0x7)
-			{
-				base.WndProc(ref m);
-			}
+			Control ctrl = (Control) sender;
+			ctrl.FindForm().ActiveControl = null;
 		}
+
+		//protected override void WndProc(ref Message m)
+		//{
+		//	// Ignore all messages that try to set the focus. Prevents the pulsing IBeam cursor from showing up.
+		//	if (m.Msg != 0x7)
+		//	{
+		//		base.WndProc(ref m);
+		//	}
+		//}
 	}
 }
