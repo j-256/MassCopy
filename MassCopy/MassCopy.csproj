@@ -74,6 +74,7 @@
     <Compile Include="CustomControls\ReadOnlyRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
