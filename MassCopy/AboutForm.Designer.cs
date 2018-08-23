@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace MassCopy
+﻿namespace MassCopy
 {
 	partial class AboutForm
 	{
@@ -59,7 +57,7 @@ namespace MassCopy
 			// AboutForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(385, 75);
+			this.ClientSize = new System.Drawing.Size(387, 69);
 			this.Controls.Add(this.attributionRichTextBox);
 			this.Controls.Add(this.copyrightLabel);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
