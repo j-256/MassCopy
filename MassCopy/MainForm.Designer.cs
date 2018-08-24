@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MassCopy
+﻿namespace MassCopy
 {
 	partial class MainForm
 	{
@@ -142,6 +140,7 @@ namespace MassCopy
 			this.destinationLabel.Size = new System.Drawing.Size(94, 20);
 			this.destinationLabel.TabIndex = 3;
 			this.destinationLabel.Text = "Destination";
+			this.toolTip.SetToolTip(this.destinationLabel, "The destination folder for copied files.");
 			// 
 			// destinationBrowseBtn
 			// 
@@ -169,6 +168,7 @@ namespace MassCopy
 			this.sourceLabel.Size = new System.Drawing.Size(62, 20);
 			this.sourceLabel.TabIndex = 1;
 			this.sourceLabel.Text = "Source";
+			this.toolTip.SetToolTip(this.sourceLabel, "The folder containing the desired files.");
 			// 
 			// destinationBrowseDialog
 			// 
@@ -202,7 +202,7 @@ namespace MassCopy
 			this.listTextBox.Size = new System.Drawing.Size(461, 640);
 			this.listTextBox.TabIndex = 7;
 			this.listTextBox.WordWrap = false;
-			this.listTextBox.LostFocus += new EventHandler(this.listTextBox_LostFocus);
+			this.listTextBox.LostFocus += new System.EventHandler(this.listTextBox_LostFocus);
 			// 
 			// listGroupBox
 			// 
@@ -256,7 +256,7 @@ namespace MassCopy
 			// 
 			this.aboutToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
 			this.aboutToolStripMenuItem.Text = "About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
