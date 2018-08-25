@@ -28,7 +28,20 @@ namespace MassCopy
 			}
 
 			sourceRecursiveCheckBox.Checked = Program.Settings.RecursiveSearch;
+
+			alphaNumericsCheckBox.Checked = Program.Settings.AlphaNumericOnly;
 			#endregion
+		}
+
+		private void mainForm_Load(object sender, EventArgs e)
+		{
+			Program.Logger.LogBox = logTextBox;
+			Program.Logger.Info("--- Application started. ---");
+		}
+
+		private void mainForm_Closed(object sender, EventArgs e)
+		{
+			Program.Logger.Info("--- Application closed. ---");
 		}
 
 		#region Multi-purpose
@@ -153,6 +166,14 @@ namespace MassCopy
 			{
 				aboutPage.ShowDialog(this);
 			}
+		}
+		#endregion
+
+		#region Options
+		private void alphaNumericsCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			Program.Settings.AlphaNumericOnly = alphaNumericsCheckBox.Checked;
+			Program.Settings.Save();
 		}
 		#endregion
 	}

@@ -28,6 +28,11 @@ namespace MassCopy
 		/// </summary>
 		public string[] FileNames { get; set; }
 
+		/// <summary>
+		/// Whether or not to ignore special characters (spaces, dashes, underscores, etc.) when looking for files.
+		/// </summary>
+		public bool AlphaNumericOnly { get; set; }
+
 		#endregion
 
 		public Settings() { }

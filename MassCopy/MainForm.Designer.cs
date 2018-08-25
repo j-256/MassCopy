@@ -13,6 +13,9 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
+			// Do we need this?
+			Program.Logger.Dispose();
+
 			if (disposing && (components != null))
 			{
 				components.Dispose();
@@ -41,6 +44,7 @@
 			this.sourceLabel = new System.Windows.Forms.Label();
 			this.destinationBrowseDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.alphaNumericsCheckBox = new System.Windows.Forms.CheckBox();
 			this.listOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.listBrowseBtn = new System.Windows.Forms.Button();
 			this.listTextBox = new System.Windows.Forms.TextBox();
@@ -49,9 +53,14 @@
 			this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.optionsGroupBox = new System.Windows.Forms.GroupBox();
+			this.logTextBox = new System.Windows.Forms.RichTextBox();
+			this.logGroupBox = new System.Windows.Forms.GroupBox();
 			this.foldersGroupBox.SuspendLayout();
 			this.listGroupBox.SuspendLayout();
 			this.mainMenuStrip.SuspendLayout();
+			this.optionsGroupBox.SuspendLayout();
+			this.logGroupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// sourceBrowseDialog
@@ -64,7 +73,7 @@
 			this.sourceBrowseBtn.AutoSize = true;
 			this.sourceBrowseBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.sourceBrowseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.sourceBrowseBtn.Location = new System.Drawing.Point(432, 26);
+			this.sourceBrowseBtn.Location = new System.Drawing.Point(446, 26);
 			this.sourceBrowseBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.sourceBrowseBtn.Name = "sourceBrowseBtn";
 			this.sourceBrowseBtn.Size = new System.Drawing.Size(81, 28);
@@ -86,10 +95,10 @@
 			this.foldersGroupBox.Controls.Add(this.sourceLabel);
 			this.foldersGroupBox.Controls.Add(this.sourceBrowseBtn);
 			this.foldersGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.foldersGroupBox.Location = new System.Drawing.Point(505, 38);
+			this.foldersGroupBox.Location = new System.Drawing.Point(487, 38);
 			this.foldersGroupBox.Margin = new System.Windows.Forms.Padding(4);
 			this.foldersGroupBox.Name = "foldersGroupBox";
-			this.foldersGroupBox.Size = new System.Drawing.Size(529, 136);
+			this.foldersGroupBox.Size = new System.Drawing.Size(543, 136);
 			this.foldersGroupBox.TabIndex = 1;
 			this.foldersGroupBox.TabStop = false;
 			this.foldersGroupBox.Text = "Folders";
@@ -97,10 +106,11 @@
 			// 
 			// sourceRecursiveCheckBox
 			// 
+			this.sourceRecursiveCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.sourceRecursiveCheckBox.AutoSize = true;
 			this.sourceRecursiveCheckBox.Cursor = System.Windows.Forms.Cursors.Help;
 			this.sourceRecursiveCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.sourceRecursiveCheckBox.Location = new System.Drawing.Point(112, 53);
+			this.sourceRecursiveCheckBox.Location = new System.Drawing.Point(85, 53);
 			this.sourceRecursiveCheckBox.Name = "sourceRecursiveCheckBox";
 			this.sourceRecursiveCheckBox.Size = new System.Drawing.Size(147, 21);
 			this.sourceRecursiveCheckBox.TabIndex = 6;
@@ -113,9 +123,9 @@
 			// 
 			this.sourceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.sourceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.sourceTextBox.Location = new System.Drawing.Point(113, 28);
+			this.sourceTextBox.Location = new System.Drawing.Point(109, 28);
 			this.sourceTextBox.Name = "sourceTextBox";
-			this.sourceTextBox.Size = new System.Drawing.Size(312, 24);
+			this.sourceTextBox.Size = new System.Drawing.Size(330, 24);
 			this.sourceTextBox.TabIndex = 5;
 			this.sourceTextBox.GotFocus += new System.EventHandler(this.sourceTextBox_GotFocus);
 			this.sourceTextBox.LostFocus += new System.EventHandler(this.sourceTextBox_LostFocus);
@@ -124,9 +134,9 @@
 			// 
 			this.destinationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.destinationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.destinationTextBox.Location = new System.Drawing.Point(113, 84);
+			this.destinationTextBox.Location = new System.Drawing.Point(109, 84);
 			this.destinationTextBox.Name = "destinationTextBox";
-			this.destinationTextBox.Size = new System.Drawing.Size(312, 24);
+			this.destinationTextBox.Size = new System.Drawing.Size(330, 24);
 			this.destinationTextBox.TabIndex = 4;
 			this.destinationTextBox.GotFocus += new System.EventHandler(this.destinationTextBox_GotFocus);
 			this.destinationTextBox.LostFocus += new System.EventHandler(this.destinationTextBox_LostFocus);
@@ -135,7 +145,7 @@
 			// 
 			this.destinationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.destinationLabel.Cursor = System.Windows.Forms.Cursors.Help;
-			this.destinationLabel.Location = new System.Drawing.Point(20, 86);
+			this.destinationLabel.Location = new System.Drawing.Point(16, 86);
 			this.destinationLabel.Name = "destinationLabel";
 			this.destinationLabel.Size = new System.Drawing.Size(94, 20);
 			this.destinationLabel.TabIndex = 3;
@@ -148,7 +158,7 @@
 			this.destinationBrowseBtn.AutoSize = true;
 			this.destinationBrowseBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.destinationBrowseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.destinationBrowseBtn.Location = new System.Drawing.Point(432, 82);
+			this.destinationBrowseBtn.Location = new System.Drawing.Point(446, 82);
 			this.destinationBrowseBtn.Margin = new System.Windows.Forms.Padding(4);
 			this.destinationBrowseBtn.Name = "destinationBrowseBtn";
 			this.destinationBrowseBtn.Size = new System.Drawing.Size(81, 28);
@@ -163,7 +173,7 @@
 			this.sourceLabel.AutoSize = true;
 			this.sourceLabel.Cursor = System.Windows.Forms.Cursors.Help;
 			this.sourceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-			this.sourceLabel.Location = new System.Drawing.Point(45, 30);
+			this.sourceLabel.Location = new System.Drawing.Point(41, 30);
 			this.sourceLabel.Name = "sourceLabel";
 			this.sourceLabel.Size = new System.Drawing.Size(62, 20);
 			this.sourceLabel.TabIndex = 1;
@@ -173,6 +183,20 @@
 			// destinationBrowseDialog
 			// 
 			this.destinationBrowseDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
+			// 
+			// alphaNumericsCheckBox
+			// 
+			this.alphaNumericsCheckBox.AutoSize = true;
+			this.alphaNumericsCheckBox.Cursor = System.Windows.Forms.Cursors.Help;
+			this.alphaNumericsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.alphaNumericsCheckBox.Location = new System.Drawing.Point(19, 25);
+			this.alphaNumericsCheckBox.Name = "alphaNumericsCheckBox";
+			this.alphaNumericsCheckBox.Size = new System.Drawing.Size(158, 22);
+			this.alphaNumericsCheckBox.TabIndex = 0;
+			this.alphaNumericsCheckBox.Text = "Alphanumerics only";
+			this.toolTip.SetToolTip(this.alphaNumericsCheckBox, resources.GetString("alphaNumericsCheckBox.ToolTip"));
+			this.alphaNumericsCheckBox.UseVisualStyleBackColor = true;
+			this.alphaNumericsCheckBox.CheckedChanged += new System.EventHandler(this.alphaNumericsCheckBox_CheckedChanged);
 			// 
 			// listOpenFileDialog
 			// 
@@ -260,10 +284,45 @@
 			this.aboutToolStripMenuItem.Text = "About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
+			// optionsGroupBox
+			// 
+			this.optionsGroupBox.Controls.Add(this.alphaNumericsCheckBox);
+			this.optionsGroupBox.Location = new System.Drawing.Point(487, 181);
+			this.optionsGroupBox.Name = "optionsGroupBox";
+			this.optionsGroupBox.Size = new System.Drawing.Size(543, 231);
+			this.optionsGroupBox.TabIndex = 10;
+			this.optionsGroupBox.TabStop = false;
+			this.optionsGroupBox.Text = "Options";
+			this.optionsGroupBox.Click += new System.EventHandler(this.ClearFocus);
+			// 
+			// logTextBox
+			// 
+			this.logTextBox.BackColor = System.Drawing.SystemColors.Window;
+			this.logTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.logTextBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.logTextBox.Location = new System.Drawing.Point(6, 25);
+			this.logTextBox.Name = "logTextBox";
+			this.logTextBox.ReadOnly = true;
+			this.logTextBox.Size = new System.Drawing.Size(531, 260);
+			this.logTextBox.TabIndex = 11;
+			this.logTextBox.Text = "";
+			// 
+			// logGroupBox
+			// 
+			this.logGroupBox.Controls.Add(this.logTextBox);
+			this.logGroupBox.Location = new System.Drawing.Point(487, 418);
+			this.logGroupBox.Name = "logGroupBox";
+			this.logGroupBox.Size = new System.Drawing.Size(543, 329);
+			this.logGroupBox.TabIndex = 12;
+			this.logGroupBox.TabStop = false;
+			this.logGroupBox.Text = "Log";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(1037, 753);
+			this.Controls.Add(this.logGroupBox);
+			this.Controls.Add(this.optionsGroupBox);
 			this.Controls.Add(this.mainMenuStrip);
 			this.Controls.Add(this.listGroupBox);
 			this.Controls.Add(this.foldersGroupBox);
@@ -275,6 +334,8 @@
 			this.Padding = new System.Windows.Forms.Padding(3);
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "MassCopy";
+			this.Closed += new System.EventHandler(this.mainForm_Closed);
+			this.Load += new System.EventHandler(this.mainForm_Load);
 			this.Click += new System.EventHandler(this.ClearFocus);
 			this.foldersGroupBox.ResumeLayout(false);
 			this.foldersGroupBox.PerformLayout();
@@ -282,6 +343,9 @@
 			this.listGroupBox.PerformLayout();
 			this.mainMenuStrip.ResumeLayout(false);
 			this.mainMenuStrip.PerformLayout();
+			this.optionsGroupBox.ResumeLayout(false);
+			this.optionsGroupBox.PerformLayout();
+			this.logGroupBox.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -308,5 +372,9 @@
 		private System.Windows.Forms.MenuStrip mainMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.GroupBox optionsGroupBox;
+		private System.Windows.Forms.CheckBox alphaNumericsCheckBox;
+		public System.Windows.Forms.RichTextBox logTextBox;
+		private System.Windows.Forms.GroupBox logGroupBox;
 	}
 }
