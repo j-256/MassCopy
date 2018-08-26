@@ -7,6 +7,7 @@ namespace MassCopy.Logging
 {
 	public sealed class Logger : IDisposable
 	{
+		#region Members and constructor(s)
 		//private static readonly Logger instance = new Logger();
 		//public static Logger Instance
 		//{
@@ -16,6 +17,25 @@ namespace MassCopy.Logging
 
 		public static Logger Instance { get; } = new Logger();
 
+		/// <summary>
+		/// The destination for the log message.
+		/// </summary>
+		[Flags]
+		public enum LogTarget
+		{
+			TextBox = 1,
+			File = 2,
+			Both = TextBox | File
+		}
+
+		/// <summary>
+		/// The RichTextBox used to display log messages.
+		/// </summary>
+		public RichTextBox LogBox { get; set; }
+
+		/// <summary>
+		/// Indicates where to display/save the log message.
+		/// </summary>
 		private enum LogType
 		{
 			Info,
@@ -34,11 +54,6 @@ namespace MassCopy.Logging
 		private string CurrentDateTime => DateTime.Now.ToString(DateTimeFormat);
 
 		/// <summary>
-		/// The RichTextBox used to display log messages.
-		/// </summary>
-		public RichTextBox LogBox { get; set; }
-
-		/// <summary>
 		/// The name of the log file.
 		/// </summary>
 		private const string LogFileName = "log.sin";
@@ -48,7 +63,7 @@ namespace MassCopy.Logging
 		private readonly StreamWriter sw;
 		// ReSharper enable InconsistentNaming
 
-		public Logger()
+		private Logger()
 		{
 			// Will create file if one does not exist, otherwise opens existing file
 			fs = new FileStream(LogFileName, FileMode.Append, FileAccess.Write, FileShare.None);
@@ -61,43 +76,57 @@ namespace MassCopy.Logging
 		//static Logger()
 		//{
 		//}
+		#endregion
 
-		private void Log(LogType logType, string message)
+		private void Log(string message, LogType logType, LogTarget logTarget)
 		{
+			// Prepend datetime and log type
 			message = $"[{CurrentDateTime}] {logType.ToString().ToUpperInvariant()}: {message}";
-			LogBox.AppendLine(message);
-			sw.WriteLine(message);
-			// Flush the buffer every line, for now
-			sw.Flush();
-			fs.Flush();
+
+			if (logTarget.HasFlag(LogTarget.TextBox))
+			{
+				LogBox.AppendLine(message);
+			}
+
+			if (logTarget.HasFlag(LogTarget.File))
+			{
+				sw.WriteLine(message);
+
+				// Flush the buffer every line, for now
+				sw.Flush();
+				fs.Flush();
+			}
 		}
 
 		#region Public log methods
 		/// <summary>
-		/// Logs an informational message to the log file and UI text box.
+		/// Logs an informational message to the log file and/or UI text box.
 		/// </summary>
 		/// <param name="message">The message to log.</param>
-		public void Info(string message)
+		/// <param name="logTarget">The destination for the log message.</param>
+		public void Info(string message, LogTarget logTarget = LogTarget.Both)
 		{
-			Log(LogType.Info, message);
+			Log(message, LogType.Info, logTarget);
 		}
 
 		/// <summary>
-		/// Logs a warning message to the log file and UI text box.
+		/// Logs a warning message to the log file and/or UI text box.
 		/// </summary>
 		/// <param name="message">The message to log.</param>
-		public void Warning(string message)
+		/// <param name="logTarget">The destination for the log message.</param>
+		public void Warning(string message, LogTarget logTarget = LogTarget.Both)
 		{
-			Log(LogType.Warning, message);
+			Log(message, LogType.Warning, logTarget);
 		}
 
 		/// <summary>
-		/// Logs an error message to the log file and UI text box.
+		/// Logs an error message to the log file and/or UI text box.
 		/// </summary>
 		/// <param name="message">The message to log.</param>
-		public void Error(string message)
+		/// <param name="logTarget">The destination for the log message.</param>
+		public void Error(string message, LogTarget logTarget = LogTarget.Both)
 		{
-			Log(LogType.Error, message);
+			Log(message, LogType.Error, logTarget);
 		}
 		#endregion
 
