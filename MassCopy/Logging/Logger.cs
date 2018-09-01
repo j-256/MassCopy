@@ -81,7 +81,7 @@ namespace MassCopy.Logging
 		private void Log(string message, LogType logType, LogTarget logTarget)
 		{
 			// Prepend datetime and log type
-			message = $"[{CurrentDateTime}] {logType.ToString().ToUpperInvariant()}: {message}";
+			message = $"[{CurrentDateTime}] {logType.ToString().ToUpper()}: {message}";
 
 			if (logTarget.HasFlag(LogTarget.TextBox))
 			{
@@ -127,6 +127,27 @@ namespace MassCopy.Logging
 		public void Error(string message, LogTarget logTarget = LogTarget.Both)
 		{
 			Log(message, LogType.Error, logTarget);
+		}
+
+		/// <summary>
+		/// Logs an exception to the log file and/or UI text box.
+		/// </summary>
+		/// <param name="e">The exception to log.</param>
+		/// <param name="logTarget">The destination for the log message.</param>
+		public void Error(Exception e, LogTarget logTarget = LogTarget.Both)
+		{
+			Log(e.ToString(), LogType.Error, logTarget);
+		}
+
+		/// <summary>
+		/// Logs a message and a related exception to the log file and/or UI text box.
+		/// </summary>
+		/// <param name="message">The message to log.</param>
+		/// <param name="e">The exception to log.</param>
+		/// <param name="logTarget">The destination for the log message.</param>
+		public void Error(string message, Exception e, LogTarget logTarget = LogTarget.Both)
+		{
+			Log(message + Environment.NewLine + e.ToString(), LogType.Error, logTarget);
 		}
 		#endregion
 

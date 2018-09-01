@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using static MassCopy.Program;
 
 namespace MassCopy
 {
@@ -33,16 +34,18 @@ namespace MassCopy
 			#endregion
 		}
 
+		#region Main form
 		private void mainForm_Load(object sender, EventArgs e)
 		{
-			Program.Logger.LogBox = logTextBox;
-			Program.Logger.Info("--- Application started. ---");
+			Logger.LogBox = logTextBox;
+			Logger.Info("--- Application started. ---");
 		}
 
 		private void mainForm_Closed(object sender, EventArgs e)
 		{
-			Program.Logger.Info("--- Application closed. ---");
+			Logger.Info("--- Application closed. ---");
 		}
+		#endregion
 
 		#region Multi-purpose
 		private void ClearFocus(object sender, EventArgs e)
@@ -176,6 +179,21 @@ namespace MassCopy
 			Program.Settings.Save();
 		}
 		#endregion
+
+		#region Log textbox
+		private void logTextBox_TextChanged(object sender, EventArgs e)
+		{
+			logTextBox.SelectionStart = logTextBox.TextLength;
+			logTextBox.ScrollToCaret();
+		}
+		#endregion
+
+		private void runButton_Click(object sender, EventArgs e)
+		{
+			MassCopier copier = new MassCopier();
+
+			copier.CopyFiles();
+		}
 	}
 }
 #pragma warning restore IDE1006 // Naming Styles

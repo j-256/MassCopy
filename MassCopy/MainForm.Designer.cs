@@ -56,6 +56,7 @@
 			this.optionsGroupBox = new System.Windows.Forms.GroupBox();
 			this.logTextBox = new System.Windows.Forms.RichTextBox();
 			this.logGroupBox = new System.Windows.Forms.GroupBox();
+			this.runButton = new System.Windows.Forms.Button();
 			this.foldersGroupBox.SuspendLayout();
 			this.listGroupBox.SuspendLayout();
 			this.mainMenuStrip.SuspendLayout();
@@ -306,9 +307,11 @@
 			this.logTextBox.Size = new System.Drawing.Size(531, 260);
 			this.logTextBox.TabIndex = 11;
 			this.logTextBox.Text = "";
+			this.logTextBox.TextChanged += new System.EventHandler(this.logTextBox_TextChanged);
 			// 
 			// logGroupBox
 			// 
+			this.logGroupBox.Controls.Add(this.runButton);
 			this.logGroupBox.Controls.Add(this.logTextBox);
 			this.logGroupBox.Location = new System.Drawing.Point(487, 418);
 			this.logGroupBox.Name = "logGroupBox";
@@ -316,6 +319,19 @@
 			this.logGroupBox.TabIndex = 12;
 			this.logGroupBox.TabStop = false;
 			this.logGroupBox.Text = "Log";
+			// 
+			// runButton
+			// 
+			this.runButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.runButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.runButton.Location = new System.Drawing.Point(232, 292);
+			this.runButton.Margin = new System.Windows.Forms.Padding(4);
+			this.runButton.Name = "runButton";
+			this.runButton.Size = new System.Drawing.Size(78, 30);
+			this.runButton.TabIndex = 9;
+			this.runButton.Text = "Go!";
+			this.runButton.UseVisualStyleBackColor = true;
+			this.runButton.Click += new System.EventHandler(this.runButton_Click);
 			// 
 			// MainForm
 			// 
@@ -376,5 +392,6 @@
 		private System.Windows.Forms.CheckBox alphaNumericsCheckBox;
 		public System.Windows.Forms.RichTextBox logTextBox;
 		private System.Windows.Forms.GroupBox logGroupBox;
+		private System.Windows.Forms.Button runButton;
 	}
 }
