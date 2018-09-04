@@ -190,7 +190,7 @@ namespace MassCopy
 
 		private void runButton_Click(object sender, EventArgs e)
 		{
-			MassCopier copier = new MassCopier();
+			MassCopier copier = new MassCopier(Program.Settings, Logger);
 
 			copier.CopyFiles();
 		}

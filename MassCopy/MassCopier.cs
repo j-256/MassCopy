@@ -1,17 +1,21 @@
-﻿using MassCopy.Utilities;
+﻿using MassCopy.Logging;
+using MassCopy.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using static MassCopy.Program;
 
 namespace MassCopy
 {
 	public class MassCopier
 	{
-		public MassCopier()
+		private Settings Settings { get; set; }
+		private Logger Logger { get; set; }
+
+		public MassCopier(Settings settings, Logger logger)
 		{
-			
+			Settings = settings;
+			Logger = logger;
 		}
 
 		private enum FailedReason
@@ -36,10 +40,10 @@ namespace MassCopy
 		{
 			#region Loading settings...
 			Logger.Info("Loading settings...");
-			DirectoryInfo sourceDir = new DirectoryInfo(Program.Settings.SourceFolder);
-			DirectoryInfo destinationDir = new DirectoryInfo(Program.Settings.DestinationFolder);
-			bool alphaNumericOnly = Program.Settings.AlphaNumericOnly;
-			bool recursiveSearch = Program.Settings.RecursiveSearch;
+			DirectoryInfo sourceDir = new DirectoryInfo(Settings.SourceFolder);
+			DirectoryInfo destinationDir = new DirectoryInfo(Settings.DestinationFolder);
+			bool alphaNumericOnly = Settings.AlphaNumericOnly;
+			bool recursiveSearch = Settings.RecursiveSearch;
 			Logger.Info("Loaded settings.");
 			#endregion
 
@@ -105,11 +109,12 @@ namespace MassCopy
 			var groups = failed.GroupBy(f => f.Reason).Select(f => new { Reason = f.Key, Count = f.Count() }).ToArray();
 			string failedSection = groups.Length != 0
 				? groups.Aggregate("", (current, group) => current + $", Failed ({group.Reason}): {{{group.Count}}}")
-				: null;
+				: ", Failed: {0}";
 
 
-			Logger.Info($"Operation completed. Of {{{filesEnumerated}}} files enumerated: " +
-			            $"Copied: {{{copied.Count}}}, Skipped: {{{skipped.Count}}}{failedSection}");
+			Logger.Info("Operation completed." + Environment.NewLine +
+			           $"Of {{{filesEnumerated}}} files enumerated:" + Environment.NewLine +
+			           $"Copied: {{{copied.Count}}}, Skipped: {{{skipped.Count}}}{failedSection}");
 			#endregion
 		}
 	}
