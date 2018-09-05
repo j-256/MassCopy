@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using static MassCopy.Logging.Logger;
 
 namespace MassCopy
 {
@@ -72,6 +73,11 @@ namespace MassCopy
 			#region Copying files
 			Logger.Info($"Attempting to copy {{{list.Count}}} files from" +
 			            $" {{{Program.Settings.SourceFolder}}} to {{{Program.Settings.DestinationFolder}}}.");
+
+			// Set to true when a message is logged to the file but not to the GUI
+			// If true after all operations finish, an additional message is shown to let the user know
+			bool additionalMessagesInFile = false;
+
 			int filesEnumerated = 0;
 			foreach (FileInfo file in sourceDir.EnumerateFiles())
 			{
@@ -86,7 +92,9 @@ namespace MassCopy
 						// Skip if destination file already exists
 						if (File.Exists(destFile))
 						{
-							Logger.Error($"Failed to copy {{{file.Name}}}. File {{{destFile}}} already exists.");
+							Logger.Error($"Failed to copy {{{file.Name}}}. File {{{destFile}}} already exists.",
+								LogTarget.File);
+							additionalMessagesInFile = true;
 							failed.Add(new FailedCopy(file.FullName, FailedReason.AlreadyExists));
 							continue;
 						}
@@ -111,10 +119,14 @@ namespace MassCopy
 				? groups.Aggregate("", (current, group) => current + $", Failed ({group.Reason}): {{{group.Count}}}")
 				: ", Failed: {0}";
 
-
 			Logger.Info("Operation completed." + Environment.NewLine +
-			           $"Of {{{filesEnumerated}}} files enumerated:" + Environment.NewLine +
-			           $"Copied: {{{copied.Count}}}, Skipped: {{{skipped.Count}}}{failedSection}");
+			           $"... Of {{{filesEnumerated}}} files enumerated:" + Environment.NewLine +
+			           $"... Copied: {{{copied.Count}}}, Skipped: {{{skipped.Count}}}{failedSection}");
+
+			if (additionalMessagesInFile)
+				Logger.Warning("Some messages were not displayed here for the sake of brevity. " +
+				              $"See {{{Logger.FileFullName}}} for a verbose log.",
+					LogTarget.TextBox);
 			#endregion
 		}
 	}

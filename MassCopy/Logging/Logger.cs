@@ -14,7 +14,6 @@ namespace MassCopy.Logging
 		//	get { return instance; }
 		//}
 		// ^ Should be equivalent to below
-
 		public static Logger Instance { get; } = new Logger();
 
 		/// <summary>
@@ -53,20 +52,23 @@ namespace MassCopy.Logging
 		/// </summary>
 		private string CurrentDateTime => DateTime.Now.ToString(DateTimeFormat);
 
-		/// <summary>
-		/// The name of the log file.
-		/// </summary>
-		private const string LogFileName = "log.sin";
-
 		// ReSharper disable InconsistentNaming
+		private const string Folder = "Logs";
+		private readonly string FileName = $"log-{DateTime.Now:yyyy-MM-dd}.txt";
+		/// <summary>
+		/// The full path to the log file, relative to executable.
+		/// </summary>
+		public string FileFullName => $@"{Folder}\{FileName}";
+
 		private readonly FileStream fs;
 		private readonly StreamWriter sw;
 		// ReSharper enable InconsistentNaming
 
 		private Logger()
 		{
+			DirectoryExtensions.CreateDirectoryIfNotExists(Folder);
 			// Will create file if one does not exist, otherwise opens existing file
-			fs = new FileStream(LogFileName, FileMode.Append, FileAccess.Write, FileShare.None);
+			fs = new FileStream(FileFullName, FileMode.Append, FileAccess.Write, FileShare.None);
 			sw = new StreamWriter(fs, Encoding.UTF8);
 		}
 
